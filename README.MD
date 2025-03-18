@@ -86,6 +86,15 @@ This will process the necessary files and generate the expected output.
 
 ## **Updating and upgrading the Project**
 
+---
+
+### **First note that:**
+
+- When you update the project the virtual environment (`assets/env/`) is **ignored by Git**, so each user must create their own.
+- For a clean update, delete `assets/env/`, recreate it, and reinstall dependencies.
+
+---
+
 If you need to update the project files, run:
 
 ```bash
@@ -101,7 +110,3 @@ pip install -r requirements.txt
 
 ---
 
-## **Additional Notes**
-
-- When you update the project the virtual environment (`assets/env/`) is **ignored by Git**, so each user must create their own.
-- For a clean update, delete `assets/env/`, recreate it, and reinstall dependencies.
