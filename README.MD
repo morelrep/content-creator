@@ -91,11 +91,11 @@ This will process the necessary files and generate the expected output.
 ### **First note that:**
 
 - When you update the project the virtual environment (`assets/env/`) is **ignored by Git**, so each user must create their own.
-- For a clean update, delete `assets/env/`, recreate it, and reinstall dependencies.
+- For a clean update, delete `assets/env/`, update the project files, and reinstall dependencies.
 
 ---
 
-If you need to update the project files, run:
+To update the project files, run:
 
 ```bash
 git pull origin main
