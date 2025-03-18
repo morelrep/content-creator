@@ -4,3 +4,10 @@ assets/env/lib
 assets/env/man
 assets/env/share
 pyvenv.cfg
+*.zip
+_data/*
+_books/*
+_authors/*
+_cities/*
+_publishers/*
+_repositories/*
