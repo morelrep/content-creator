@@ -1,38 +1,35 @@
 import pandas as pd
 from slugify import slugify
 
-# Create a DataFrame from the CSV file
+# Load the CSV file into a DataFrame
 data = pd.read_csv("../../../_data/books.csv", sep=',', engine='python', encoding="utf-8").fillna('')
 
 # Convert the DataFrame into a list of rows for processing
 books = data.values.tolist()
 
-# Loop through each book record
 for book in books:
-    # Split the authors column into individual authors
-    authors_array = book[3].split("; ")
+    authors_array = book[3].split("; ")  # Split multiple authors
 
     for author in authors_array:
-        # Split each author into "Lastname" and "Name" parts
         author_array = author.split(", ")
 
-        # Check if the author_array has both "Lastname" and "Name"
-        if len(author_array) < 2:
-            print(f"Skipping invalid author format: '{author}'")
-            continue  # Skip this author and move to the next one
+        if len(author_array) >= 2:
+            # Standard format: "Lastname, Firstname"
+            last_name, first_name = author_array[0], author_array[1]
+            url_raw = f"{last_name}-{first_name}"
+        else:
+            # Handle single-name authors (use the name as both first and last)
+            last_name = author.strip()
+            first_name = "unknown"  # Placeholder to maintain structure
+            url_raw = last_name  # Use only the single name
 
-        # Generate the slugified URL for the author
-        url_raw = f"{author_array[0]}-{author_array[1]}"  # Combine Lastname and Name
-        url = slugify(url_raw)  # Use the slugify library to make it URL-safe
-
-        # Define the output file name
+        # Slugify the URL
+        url = slugify(url_raw)
         file_name = f'../../../_authors/{url}.md'
 
-        # Write the author details to the .md file
-        title = str(author)  # Use the full author name for the title
+        # Write the author details to the file
+        title = author.strip()  # Use full name as title
         with open(file_name, 'w', encoding="utf-8") as f:
-            f.write(f'---\ntitle: {title}\n---')  # Write the YAML front matter
-            f.close()  # Close the file explicitly
+            f.write(f'---\ntitle: {title}\n---')
 
-        # Log the saved file
         print(f'{file_name} saved')
