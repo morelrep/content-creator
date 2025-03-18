@@ -17,6 +17,23 @@ def create_zip():
     shutil.make_archive("output", "zip", root_dir=".", base_dir=".")
     return ZIP_FILE
 
+def delete_generated_files():
+    """Deletes all generated files but keeps folder structure and .keep files."""
+    folders_to_clean = ["_authors", "_books", "_cities", "_publishers", "_repositories", "assets/img", "_data", "assets/data"]
+    
+    for folder in folders_to_clean:
+        for root, dirs, files in os.walk(folder):
+            for file in files:
+                if file != ".keep":  # Skip .keep files
+                    os.remove(os.path.join(root, file))  # Delete other files
+
+    # Remove the zip file after serving
+    if os.path.exists(ZIP_FILE):
+        os.remove(ZIP_FILE)
+
+    print("Generated files and output.zip deleted successfully.")
+
+
 @app.route("/", methods=["GET", "POST"])
 def upload_file():
     if request.method == "POST":
@@ -44,7 +61,12 @@ def upload_file():
 
 @app.route("/download")
 def download_file():
-    return send_file(ZIP_FILE, as_attachment=True)
+    response = send_file(ZIP_FILE, as_attachment=True)
+
+    # After sending the file, delete generated content
+    delete_generated_files()
+
+    return response
 
 if __name__ == "__main__":
     app.run(debug=True)
