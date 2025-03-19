@@ -43,7 +43,7 @@ def upload_file():
             file.save(file_path)
 
             # Run the script to generate output
-            result = subprocess.run(["python", "morel-generate.py"], capture_output=True, text=True, cwd=os.path.abspath("assets/env/src"))
+            result = subprocess.run(["python", "morel-generate.py"], capture_output=True, text=True, cwd="content-creator/assets/env/src")
 
             # Create zip file
             zip_path = create_zip()
@@ -61,12 +61,7 @@ def upload_file():
 
 @app.route("/download")
 def download_file():
-    response = send_file(ZIP_FILE, as_attachment=True)
-
-    # After sending the file, delete generated content
-    delete_generated_files()
-
-    return response
+    return send_file(ZIP_FILE, as_attachment=True)
 
 if __name__ == "__main__":
     app.run(debug=True)
