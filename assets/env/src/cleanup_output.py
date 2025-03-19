@@ -1,7 +1,7 @@
 import os
 
 # Adjust paths to work from the src folder
-BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "../.."))
+BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "../../.."))
 FOLDERS_TO_CLEAN = [
     os.path.join(BASE_DIR, "_authors"),
     os.path.join(BASE_DIR, "_books"),
