@@ -1,3 +1,5 @@
+# import sys
+# sys.path.append('scripts/')
 import subprocess
 # import compress_output
 import cleanup_output
