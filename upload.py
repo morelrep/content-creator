@@ -43,13 +43,7 @@ def upload_file():
             file.save(file_path)
 
             # Run the script to generate output
-           result = subprocess.run(
-    ["python", "morel-generate.py"],
-    capture_output=True,
-    text=True,
-    cwd=os.path.abspath("assets/env/src")  # Convert to absolute path
-)
-
+           result = subprocess.run(["python", "morel-generate.py"], capture_output=True, text=True, cwd=os.path.abspath("assets/env/src"))
 
             # Create zip file
             zip_path = create_zip()
