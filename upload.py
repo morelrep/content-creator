@@ -1,4 +1,4 @@
-# Web app to use on a server. To use locally, change the UPLOAD_FOLDER, the cwd, and the make_archive values to match the local folders
+# Web app to use on a server. To use locally, change the UPLOAD_FOLDER and the
 
 import shutil
 import os
@@ -16,8 +16,31 @@ FOLDERS_TO_ZIP = ["_authors", "_books", "_cities", "_publishers", "_repositories
 def create_zip():
     if os.path.exists(ZIP_FILE):
         os.remove(ZIP_FILE)
-    shutil.make_archive("/home/morel/content-creator/output", "zip", root_dir="/home/morel/content-creator")
+
+    temp_zip_folder = "/home/morel/content-creator/temp_zip"
+
+    # Remove old temp folder if it exists
+    if os.path.exists(temp_zip_folder):
+        shutil.rmtree(temp_zip_folder)
+
+    # Create a clean temp folder
+    os.makedirs(temp_zip_folder)
+
+    # Copy only the necessary folders into temp_zip
+    for folder in FOLDERS_TO_ZIP:
+        src = os.path.join("/home/morel/content-creator", folder)
+        dest = os.path.join(temp_zip_folder, folder)
+        if os.path.exists(src):
+            shutil.copytree(src, dest, dirs_exist_ok=True)  # Copy folders while preserving structure
+
+    # Create the zip from temp_zip
+    shutil.make_archive("/home/morel/content-creator/output", "zip", root_dir=temp_zip_folder)
+
+    # Remove the temp folder after zipping
+    shutil.rmtree(temp_zip_folder)
+
     return ZIP_FILE
+
 
 def delete_generated_files():
     """Deletes all generated files but keeps folder structure and .keep files."""
