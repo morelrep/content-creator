@@ -1,10 +1,12 @@
+# Web app to use on a server. To use locally, change the UPLOAD_FOLDER and the 
+
 import shutil
 import os
 import subprocess
 from flask import Flask, request, send_file
 
 app = Flask(__name__)
-UPLOAD_FOLDER = "assets/data"
+UPLOAD_FOLDER = "content-creator/assets/data"
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 
