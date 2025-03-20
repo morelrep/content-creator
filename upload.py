@@ -6,7 +6,7 @@ import subprocess
 from flask import Flask, request, send_file
 
 app = Flask(__name__)
-UPLOAD_FOLDER = "content-creator/assets/data"
+UPLOAD_FOLDER = "/home/morel/content-creator/assets/data"
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 
