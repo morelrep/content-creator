@@ -3,6 +3,7 @@ assets/env/include
 assets/env/lib
 assets/env/man
 assets/env/share
+assets/env/src/__pycache__
 pyvenv.cfg
 *.zip
 _data/*
