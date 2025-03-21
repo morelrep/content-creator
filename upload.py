@@ -93,9 +93,12 @@ def upload_file():
 
 @app.route("/download")
 def download_file():
-    response = send_file(ZIP_FILE, as_attachment=True)
-    delete_generated_files()
-    return response
+    @after_this_request
+    def cleanup(response):
+        delete_generated_files()
+        return response
+
+    return send_file(ZIP_FILE, as_attachment=True)
 
 
 if __name__ == "__main__":
